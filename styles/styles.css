@@ -1,0 +1,296 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* Cabeçalho */
+
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+    background-color: #531414;
+    overflow-x: hidden;
+}
+
+.logo-img{
+    display: flex;
+    max-width: 10%;
+    max-height: 10%;
+}
+
+.section-1{
+    background-color: #181818;
+}
+
+.section-text{
+    font-family: "Lexend Deca", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 24px;
+    color:#531414 ;
+    text-transform: uppercase;
+}
+
+.support-text{
+    font-family: "Lexend Deca", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+    color:#1FD400;
+    text-decoration:none;
+}
+
+.common-text{
+    font-family: "Lexend Deca", sans-serif;
+    font-weight: "bold";
+    font-style: normal;
+    font-size: 20px;
+    max-width: 800px;
+    color:#181818;
+    margin: 0 auto; /* Centraliza horizontalmente */
+    text-align: center; /* Centraliza o texto dentro do container */
+}
+
+.white-text{
+    font-family: "Lexend Deca", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+    color:#ffffff;
+}
+
+.white-text-menu{
+    font-family: "Lexend Deca", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+    color:#d6d6d6;
+    list-style: none;
+    display: flex;
+    gap: 48px;
+}
+
+.contact-text{
+    font-family: "Lexend Deca", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+    color:rgb(44, 19, 109)
+}
+
+
+.logo h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.logo p {
+    margin: 0;
+    font-size: 12px;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding-bottom: 200;
+}
+
+/* Carrossel */
+.carousel {
+    position: relative;
+    width: 100%; 
+    overflow: hidden; 
+  }
+  
+  .carousel-images {
+    display: flex;
+    transition: transform 1s ease-in-out; 
+  }
+  
+  .carousel-images img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left; 
+  }
+  
+  .carousel-images a img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+
+.slick-center img {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Seções */
+section {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.about-content, .games {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.about-card, .game-card {
+    width: 200px;
+    height: 150px;
+    background: #ddd;
+    display: flex;
+    list-style: none;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: "Fugaz One", serif;
+    font-style: normal;
+    font-size: 16px;
+    color:#181818;
+    text-decoration:none;
+}
+
+/* Rodapé */
+.site-footer {
+    text-align: center;
+    background-color: #531414 ;
+    color: white;
+    padding: 20px;
+}
+
+/* Formulário de Contato */
+#contato .contact-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.contact-form button {
+    padding: 10px 20px;
+    background-color: #531414 ;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.row {
+    display: flex; /* Alinha as colunas lado a lado */
+    justify-content: center; /* Centraliza as imagens horizontalmente */
+    align-items: center; /* Alinha as imagens verticalmente */
+    padding-top: 3%;
+    gap: 60px;
+}
+
+.column {
+    text-align: center; /* Centraliza o conteúdo das colunas */
+}
+
+.column img {
+    width: 95px; /* Ajuste o tamanho das imagens */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+
+
+/* Suavização de rolagem */
+html {
+    scroll-behavior: smooth;
+}
+
+/* LANDING PAGE */
+
+.landing-container {
+    position: relative; /* Garante que os elementos internos sigam sua posição */
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* Evita rolagem extra */
+}
+
+.landing-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mantém a proporção e cobre toda a tela */
+    display: block;
+}
+
+.landing-button {
+    position: absolute;
+    text-align: left;
+    padding: 20px;
+    background: #1FD400;
+    border: none;
+    cursor: pointer;
+    border-radius: 15%;
+    margin-top: 40px;
+    text-decoration:none;
+}
+
+.landing-img2 {
+    position: absolute;
+    top: 30%;
+    left: 38%;
+    transform: translate(-50%, -50%); 
+    text-align: left; 
+    padding: 20px;
+    border-radius: 10px;
+    font-family: "Fugaz One", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 28px;
+    color:#ffffff;
+    margin-top: 40px;
+}
+
+
+.landing-text {
+    position: absolute;
+    top: 30%;
+    left: 38%;
+    transform: translate(-50%, -50%); 
+    text-align: left; 
+    padding: 20px;
+    border-radius: 10px;
+    font-family: "Fugaz One", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 28px;
+    color:#ffffff;
+    margin-top: 40px;
+}
