@@ -294,3 +294,14 @@ html {
     color:#ffffff;
     margin-top: 40px;
 }
+
+#hero {
+  text-align: center;
+  margin-bottom: 0.01%; /* distância para a seção seguinte */
+}
+
+#hero img {
+    width: 20%;
+    max-width: 100%;
+    height: auto;
+}
