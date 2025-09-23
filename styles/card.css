@@ -45,3 +45,25 @@
     border-top: none;
     border-bottom: none;
 }
+
+
+.card-devblog{
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    align-self: center;
+    background-color: white;
+    overflow-x: hidden;
+    min-height: 260px;
+    width: 30%;
+    border-radius: 40px;
+    border: 2px solid #531414;
+    background: #f1f1f1;
+    display: flex;
+    list-style: none;
+    align-items: center;
+    justify-content: center;
+    font-family: "Lexend Deca", sans-serif;
+    font-style: italic;
+    font-size: 16px;
+}
