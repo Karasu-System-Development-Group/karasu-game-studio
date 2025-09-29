@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import datetime
+import os
 
 
 def definir_mes() -> str: 
@@ -17,7 +18,7 @@ def definir_mes() -> str:
 
 
 
-def escrever_post(arquivo, conteudo, data):
+def escrever_post(arquivo: str, conteudo: str, data: str):
     # Abre o HTML existente
     with open(fr"{arquivo}", "r", encoding="utf-8") as f:
         soup = BeautifulSoup(f, "html.parser")
@@ -43,14 +44,17 @@ def escrever_post(arquivo, conteudo, data):
 if __name__ == "__main__":
     continuar: bool = True
     contagem: int = 0
-    data = definir_mes()
+    data: str = definir_mes()
     print(data)
+    os.system('cls')
+    print(f'Criando a postagem do dia {data}.')
+    print(' ')
     while continuar:
         if contagem == 0:
             arquivo: str = r".utils\blog\template.html"
         else:
             arquivo: str = fr"{data}.html"
-        conteudo: str = input(f'Escreva o {contagem+1}° parágrafo:')
+        conteudo: str = input(f'Escreva o {contagem+1}° parágrafo: ')
         escrever_post(arquivo, conteudo, data)
         contagem = contagem+1
         print(contagem)
