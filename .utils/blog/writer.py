@@ -17,9 +17,9 @@ def definir_mes() -> str:
 
 
 
-def escrever_post(conteudo, data):
+def escrever_post(arquivo, conteudo, data):
     # Abre o HTML existente
-    with open(r".utils\blog\template.html", "r", encoding="utf-8") as f:
+    with open(fr"{arquivo}", "r", encoding="utf-8") as f:
         soup = BeautifulSoup(f, "html.parser")
 
     # Encontra a div que vai receber o post
@@ -41,8 +41,16 @@ def escrever_post(conteudo, data):
 
 
 if __name__ == "__main__":
-    contagem: int = 0
+    contagem: int = 1
     data = definir_mes()
     print(data)
-    conteudo = input(f'Escreva o {contagem+1}° parágrafo:')
-    escrever_post(conteudo, data)
+    if contagem == 0:
+        arquivo: str = r".utils\blog\template.html"
+    else:
+        arquivo: str = fr"{data}.html"
+    conteudo: str = input(f'Escreva o {contagem+1}° parágrafo:')
+    escrever_post(arquivo, conteudo, data)
+    contagem = contagem+1
+    print(contagem)
+
+
