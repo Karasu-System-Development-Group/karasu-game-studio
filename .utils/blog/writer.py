@@ -8,6 +8,24 @@ months = [
 ]
 
 
+def publish(path, date) -> None:
+    confirmation: str = input('Publicar o post? S/N')
+    if confirmation.lower() == 's':
+        # Adiciona o arquivo
+        os.system(f'git add "{path}"')
+        # Cria o commit
+        os.system(f'git commit -m "{date} devblog post added"')
+        # Dá push para o branch main
+        os.system('git push origin main')
+    elif confirmation.lower() == 'n':
+        print('> O post não foi publicado.')
+        print('> Publicação cancelada/negada pelo autor.')
+    else:
+        print('> Opção inválida, por favor, tente novamente.')
+        publish(path, date)
+
+
+
 def current_folder() -> str:
     ano: int = pegar_data()[1]
     mes: int = int(pegar_data()[2])
@@ -91,5 +109,6 @@ if __name__ == "__main__":
             print(f'> O post pode ser encontrado em {arquivo_final}')
             print(f'> Você pode clicar com a teclar CTRL + BOTÃO ESQUERDO para acessar o arquivo.')
             print(f'> O total de parágrafos escritos nesta postagem foi de: {contagem}')
+            publish(arquivo_final, data)
 
 
