@@ -55,8 +55,10 @@ def escrever_post(arquivo: str, conteudo: str, data: str):
     container.append(novo_p)
 
     # Salva de volta no HTML
-    with open(f"{data}.html", "w", encoding="utf-8") as f:
+    # Salva de volta no HTML no caminho correto
+    with open(arquivo_final, "w", encoding="utf-8") as f:
         f.write(str(soup.prettify()))
+
 
 
 
