@@ -1,7 +1,7 @@
-from colorama import init, Fore, Style
 from bs4 import BeautifulSoup
 import datetime
 import os
+from logger import info, warn, error, ask
 
 months = [
     "January", "February", "March", "April", "May", "June",
@@ -10,7 +10,7 @@ months = [
 
 
 def publish(path, date) -> None:
-    confirmation: str = input('> Publicar o post? S/N ')
+    confirmation: str = ask('Publicar o post? S/N ')
     if confirmation.lower() == 's':
         # Adiciona o arquivo
         os.system(f'git add "{path}"')
@@ -18,14 +18,13 @@ def publish(path, date) -> None:
         os.system(f'git commit -m "{date} devblog post added"')
         # Dá push para o branch main
         os.system('git push origin main')
-        print(Fore.GREEN + 'O post foi publicado com sucesso.')
+        info('O post foi publicado com sucesso.')
     elif confirmation.lower() == 'n':
-        print(Fore.RED + '> O post não foi publicado.')
-        print('> Publicação cancelada/negada pelo autor.')
+        warn('O post não foi publicado.')
+        info('Publicação cancelada/negada pelo autor.')
     else:
-        print('> Opção inválida, por favor, tente novamente.')
+        error('Opção inválida, por favor, tente novamente.')
         publish(path, date)
-
 
 
 def current_folder() -> str:
@@ -37,9 +36,9 @@ def current_folder() -> str:
     # Cria a pasta se não existir
     if not os.path.exists(final_path):
         os.makedirs(final_path)
-        print("Pasta criada!")
+        info("Pasta criada!")
     else:
-        print("A pasta já existe.")
+        info("A pasta já existe.")
     return final_path
         
 
@@ -64,6 +63,7 @@ def escrever_post(arquivo: str, conteudo: str, data: str, title: str):
     with open(fr"{arquivo}", "r", encoding="utf-8") as f:
         soup = BeautifulSoup(f, "html.parser")
 
+    # Altera o título e o h2
     soup.title.string = title
     h2_tag = soup.find("div", class_="section-text").h2
     h2_tag.string = fr'//devblog - {title}'
@@ -78,13 +78,9 @@ def escrever_post(arquivo: str, conteudo: str, data: str, title: str):
     # Adicionar depois do que já existe
     container.append(novo_p)
 
-    # Salva de volta no HTML
     # Salva de volta no HTML no caminho correto
     with open(arquivo_final, "w", encoding="utf-8") as f:
         f.write(str(soup.prettify()))
-
-
-
 
 
 
@@ -92,30 +88,25 @@ if __name__ == "__main__":
     continuar: bool = True
     contagem: int = 0
     data: str = pegar_data()[0]
-    print(data)
+    info(f'Criando a postagem do dia {data}.')
     pasta = current_folder()
     arquivo_final = os.path.join(pasta, f"{data}.html")
     os.system('cls')
-    print(f'Criando a postagem do dia {data}.')
-    print(' ')
-    title: str = input('Por favor, escolha o título da postagem: ')
+    title: str = ask('Por favor, escolha o título da postagem: ')
     while continuar:
         if contagem == 0:
             arquivo: str = r".utils\blog\template.html"
         else:
             arquivo: str = arquivo_final
-        conteudo: str = input(f'Escreva o {contagem+1}° parágrafo: ')
+        conteudo: str = ask(f'Escreva o {contagem+1}° parágrafo: ')
         escrever_post(arquivo, conteudo, data, title)
         contagem = contagem+1
-        print(contagem)
-        escolha: str = input(Fore.RED + 'Continuar? S/N ')
+        escolha: str = ask('Continuar? S/N ')
         if escolha.lower() == 'n':
             continuar = False
             os.system('cls')
-            print('> Arquivo do post criado com sucesso!')
-            print(f'> O post pode ser encontrado em {arquivo_final}')
-            print(f'> Você pode clicar com a teclar CTRL + BOTÃO ESQUERDO para acessar o arquivo.')
-            print(f'> O total de parágrafos escritos nesta postagem foi de: {contagem}')
+            info('Arquivo do post criado com sucesso!')
+            info(f'O post pode ser encontrado em {arquivo_final}')
+            info(f'Você pode clicar com a tecla CTRL + BOTÃO ESQUERDO para acessar o arquivo.')
+            info(f'O total de parágrafos escritos nesta postagem foi de: {contagem}')
             publish(arquivo_final, data)
-
-
