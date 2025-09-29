@@ -1,3 +1,4 @@
+from colorama import init, Fore, Style
 from bs4 import BeautifulSoup
 import datetime
 import os
@@ -9,7 +10,7 @@ months = [
 
 
 def publish(path, date) -> None:
-    confirmation: str = input('Publicar o post? S/N')
+    confirmation: str = input('> Publicar o post? S/N ')
     if confirmation.lower() == 's':
         # Adiciona o arquivo
         os.system(f'git add "{path}"')
@@ -17,8 +18,9 @@ def publish(path, date) -> None:
         os.system(f'git commit -m "{date} devblog post added"')
         # Dá push para o branch main
         os.system('git push origin main')
+        print(Fore.GREEN + 'O post foi publicado com sucesso.')
     elif confirmation.lower() == 'n':
-        print('> O post não foi publicado.')
+        print(Fore.RED + '> O post não foi publicado.')
         print('> Publicação cancelada/negada pelo autor.')
     else:
         print('> Opção inválida, por favor, tente novamente.')
@@ -57,10 +59,14 @@ def pegar_data() -> str:
 
 
 
-def escrever_post(arquivo: str, conteudo: str, data: str):
+def escrever_post(arquivo: str, conteudo: str, data: str, title: str):
     # Abre o HTML existente
     with open(fr"{arquivo}", "r", encoding="utf-8") as f:
         soup = BeautifulSoup(f, "html.parser")
+
+    soup.title.string = title
+    h2_tag = soup.find("div", class_="section-text").h2
+    h2_tag.string = fr'//devblog - {title}'
 
     # Encontra a div que vai receber o post
     container = soup.find("div", class_="simple-container")
@@ -92,16 +98,17 @@ if __name__ == "__main__":
     os.system('cls')
     print(f'Criando a postagem do dia {data}.')
     print(' ')
+    title: str = input('Por favor, escolha o título da postagem: ')
     while continuar:
         if contagem == 0:
             arquivo: str = r".utils\blog\template.html"
         else:
             arquivo: str = arquivo_final
         conteudo: str = input(f'Escreva o {contagem+1}° parágrafo: ')
-        escrever_post(arquivo, conteudo, data)
+        escrever_post(arquivo, conteudo, data, title)
         contagem = contagem+1
         print(contagem)
-        escolha: str = input('Continuar? S/N ')
+        escolha: str = input(Fore.RED + 'Continuar? S/N ')
         if escolha.lower() == 'n':
             continuar = False
             os.system('cls')
