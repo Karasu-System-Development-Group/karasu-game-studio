@@ -41,16 +41,22 @@ def escrever_post(arquivo, conteudo, data):
 
 
 if __name__ == "__main__":
-    contagem: int = 1
+    continuar: bool = True
+    contagem: int = 0
     data = definir_mes()
     print(data)
-    if contagem == 0:
-        arquivo: str = r".utils\blog\template.html"
-    else:
-        arquivo: str = fr"{data}.html"
-    conteudo: str = input(f'Escreva o {contagem+1}° parágrafo:')
-    escrever_post(arquivo, conteudo, data)
-    contagem = contagem+1
-    print(contagem)
+    while continuar:
+        if contagem == 0:
+            arquivo: str = r".utils\blog\template.html"
+        else:
+            arquivo: str = fr"{data}.html"
+        conteudo: str = input(f'Escreva o {contagem+1}° parágrafo:')
+        escrever_post(arquivo, conteudo, data)
+        contagem = contagem+1
+        print(contagem)
+        escolha: str = input('Continuar? S/N')
+        if escolha.lower() == 'n':
+            continuar = False
+
 
 
