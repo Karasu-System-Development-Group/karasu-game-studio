@@ -83,9 +83,13 @@ if __name__ == "__main__":
         escrever_post(arquivo, conteudo, data)
         contagem = contagem+1
         print(contagem)
-        escolha: str = input('Continuar? S/N')
+        escolha: str = input('Continuar? S/N ')
         if escolha.lower() == 'n':
             continuar = False
-
+            os.system('cls')
+            print('> Arquivo do post criado com sucesso!')
+            print(f'> O post pode ser encontrado em {arquivo_final}')
+            print(f'> Você pode clicar com a teclar CTRL + BOTÃO ESQUERDO para acessar o arquivo.')
+            print(f'> O total de parágrafos escritos nesta postagem foi de: {contagem}')
 
 
