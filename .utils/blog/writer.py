@@ -2,29 +2,30 @@ from bs4 import BeautifulSoup
 import datetime
 import os
 from logger import info, warn, error, ask
+from updater import *
 
 months = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 ]
 
-
-def publish(path, date) -> None:
-    confirmation: str = ask('Publicar o post? S/N ')
-    if confirmation.lower() == 's':
-        # Adiciona o arquivo
-        os.system(f'git add "{path}"')
-        # Cria o commit
-        os.system(f'git commit -m "{date} devblog post added"')
-        # Dá push para o branch main
-        os.system('git push origin main')
-        info('O post foi publicado com sucesso.')
-    elif confirmation.lower() == 'n':
-        warn('O post não foi publicado.')
-        info('Publicação cancelada/negada pelo autor.')
-    else:
-        error('Opção inválida, por favor, tente novamente.')
-        publish(path, date)
+class publisher:
+    def publish(path, date) -> None:
+        confirmation: str = ask('Publicar o post? S/N ')
+        if confirmation.lower() == 's':
+            # Adiciona o arquivo
+            os.system(f'git add "{path}"')
+            # Cria o commit
+            os.system(f'git commit -m "{date} devblog post added"')
+            # Dá push para o branch main
+            os.system('git push origin main')
+            info('O post foi publicado com sucesso.')
+        elif confirmation.lower() == 'n':
+            warn('O post não foi publicado.')
+            info('Publicação cancelada/negada pelo autor.')
+        else:
+            error('Opção inválida, por favor, tente novamente.')
+            publisher.publish(path, date)
 
 
 def current_folder() -> str:
@@ -57,30 +58,30 @@ def pegar_data() -> list:
 
 
 
+class writer:
+    def escrever_post(arquivo: str, conteudo: str, data: str, title: str) -> None:
+        # Abre o HTML existente
+        with open(fr"{arquivo}", "r", encoding="utf-8") as f:
+            soup = BeautifulSoup(f, "html.parser")
 
-def escrever_post(arquivo: str, conteudo: str, data: str, title: str) -> None:
-    # Abre o HTML existente
-    with open(fr"{arquivo}", "r", encoding="utf-8") as f:
-        soup = BeautifulSoup(f, "html.parser")
+        # Altera o título e o h2
+        soup.title.string = title
+        h2_tag = soup.find("div", class_="section-text").h2
+        h2_tag.string = fr'//devblog - {title}'
 
-    # Altera o título e o h2
-    soup.title.string = title
-    h2_tag = soup.find("div", class_="section-text").h2
-    h2_tag.string = fr'//devblog - {title}'
+        # Encontra a div que vai receber o post
+        container = soup.find("div", class_="simple-container")
 
-    # Encontra a div que vai receber o post
-    container = soup.find("div", class_="simple-container")
+        ## Cria um novo parágrafo ##
+        novo_p = soup.new_tag("p")
+        novo_p.string = conteudo
 
-    ## Cria um novo parágrafo ##
-    novo_p = soup.new_tag("p")
-    novo_p.string = conteudo
+        # Adicionar depois do que já existe
+        container.append(novo_p)
 
-    # Adicionar depois do que já existe
-    container.append(novo_p)
-
-    # Salva de volta no HTML no caminho correto
-    with open(arquivo_final, "w", encoding="utf-8") as f:
-        f.write(str(soup.prettify()))
+        # Salva de volta no HTML no caminho correto
+        with open(arquivo_final, "w", encoding="utf-8") as f:
+            f.write(str(soup.prettify()))
 
 
 
@@ -99,7 +100,7 @@ if __name__ == "__main__":
         else:
             arquivo: str = arquivo_final
         conteudo: str = ask(f'Escreva o {contagem+1}° parágrafo: ')
-        escrever_post(arquivo, conteudo, data, title)
+        writer.escrever_post(arquivo, conteudo, data, title)
         contagem = contagem+1
         escolha: str = ask('Continuar? S/N ')
         if escolha.lower() == 'n':
@@ -109,4 +110,5 @@ if __name__ == "__main__":
             info(f'O post pode ser encontrado em {arquivo_final}')
             info(f'Você pode clicar com a tecla CTRL + BOTÃO ESQUERDO para acessar o arquivo.')
             info(f'O total de parágrafos escritos nesta postagem foi de: {contagem}')
-            publish(arquivo_final, data)
+            publisher.publish(arquivo_final, data)
+            updater.update_devblog(arquivo_final, title)
