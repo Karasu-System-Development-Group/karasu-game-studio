@@ -9,7 +9,7 @@ months = [
     "July", "August", "September", "October", "November", "December"
 ]
 
-class publisher:
+class Publisher:
     def publish(path, date) -> None:
         confirmation: str = ask('Publicar o post? S/N ')
         if confirmation.lower() == 's':
@@ -25,7 +25,7 @@ class publisher:
             info('Publicação cancelada/negada pelo autor.')
         else:
             error('Opção inválida, por favor, tente novamente.')
-            publisher.publish(path, date)
+            Publisher.publish(path, date)
 
 
 def current_folder() -> str:
@@ -58,7 +58,7 @@ def pegar_data() -> list:
 
 
 
-class writer:
+class Writer:
     def escrever_post(arquivo: str, conteudo: str, data: str, title: str) -> None:
         # Abre o HTML existente
         with open(fr"{arquivo}", "r", encoding="utf-8") as f:
@@ -100,7 +100,7 @@ if __name__ == "__main__":
         else:
             arquivo: str = arquivo_final
         conteudo: str = ask(f'Escreva o {contagem+1}° parágrafo: ')
-        writer.escrever_post(arquivo, conteudo, data, title)
+        Writer.escrever_post(arquivo, conteudo, data, title)
         contagem = contagem+1
         escolha: str = ask('Continuar? S/N ')
         if escolha.lower() == 'n':
@@ -110,5 +110,6 @@ if __name__ == "__main__":
             info(f'O post pode ser encontrado em {arquivo_final}')
             info(f'Você pode clicar com a tecla CTRL + BOTÃO ESQUERDO para acessar o arquivo.')
             info(f'O total de parágrafos escritos nesta postagem foi de: {contagem}')
-            publisher.publish(arquivo_final, data)
-            updater.update_devblog(arquivo_final, title)
+            Publisher.publish(arquivo_final, data)
+            link_relativo = arquivo_final.replace("\\", "/").split("devblog/", 1)[1]
+            Updater.update_devblog(link_relativo, title)
