@@ -43,7 +43,7 @@ def current_folder() -> str:
         
 
 
-def pegar_data() -> str: 
+def pegar_data() -> list: 
     dt = datetime.datetime.now()
     ano: int = dt.year
     mes: int = dt.month
@@ -58,7 +58,7 @@ def pegar_data() -> str:
 
 
 
-def escrever_post(arquivo: str, conteudo: str, data: str, title: str):
+def escrever_post(arquivo: str, conteudo: str, data: str, title: str) -> None:
     # Abre o HTML existente
     with open(fr"{arquivo}", "r", encoding="utf-8") as f:
         soup = BeautifulSoup(f, "html.parser")
